@@ -96,6 +96,12 @@ const displayMovements = function (movements) {
 
 displayMovements(account1.movements);
 
+//calc and print balance
+const calcPrintBalance = function (movements) {
+  const balance = movements.reduce((accu, currMov) => accu + currMov, 0);
+  labelBalance.textContent = `${balance} EUR`;
+};
+
 // compute usernames
 
 const createUserNames = function (accs) {
@@ -109,3 +115,5 @@ const createUserNames = function (accs) {
   });
 };
 createUserNames(accounts);
+
+calcPrintBalance(movements);

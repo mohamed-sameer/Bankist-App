@@ -95,3 +95,17 @@ const displayMovements = function (movements) {
 };
 
 displayMovements(account1.movements);
+
+// compute usernames
+
+const createUserNames = function (accs) {
+  //modify the original array
+  accs.forEach(function (acc) {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(val => val[0])
+      .join('');
+  });
+};
+createUserNames(accounts);

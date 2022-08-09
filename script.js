@@ -101,9 +101,31 @@ const calcPrintBalance = function (movements) {
   const balance = movements.reduce((accu, currMov) => accu + currMov, 0);
   labelBalance.textContent = `${balance} EUR`;
 };
+calcPrintBalance(movements);
+
+// calc summary
+const calcDisplaySummary = function (movement) {
+  //labelSumIn
+  const income = movements
+    .filter(move => move > 0)
+    .reduce((acc, curr) => acc + curr, 0);
+  labelSumIn.textContent = `${income}€`;
+  //labelSumOut
+  const outCome = movements
+    .filter(move => move <= 0)
+    .reduce((acc, curr) => acc + curr, 0);
+  labelSumOut.textContent = `${Math.abs(outCome)}€`;
+  //labelSumInterest
+  const interest = movements
+    .filter(move => move >= 0)
+    .map(deposit => (deposit * 1.2) / 100)
+    .filter(int => int >= 1)
+    .reduce((acc, int) => acc + int, 0);
+  labelSumInterest.textContent = `${interest}€`;
+};
+calcDisplaySummary(movements);
 
 // compute usernames
-
 const createUserNames = function (accs) {
   //modify the original array
   accs.forEach(function (acc) {
@@ -115,5 +137,3 @@ const createUserNames = function (accs) {
   });
 };
 createUserNames(accounts);
-
-calcPrintBalance(movements);

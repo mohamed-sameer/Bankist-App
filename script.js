@@ -94,17 +94,17 @@ const displayMovements = function (movements) {
   });
 };
 
-displayMovements(account1.movements);
+// displayMovements(account1.movements);
 
 //calc and print balance
 const calcPrintBalance = function (movements) {
   const balance = movements.reduce((accu, currMov) => accu + currMov, 0);
   labelBalance.textContent = `${balance} EUR`;
 };
-calcPrintBalance(movements);
+// calcPrintBalance(movements);
 
 // calc summary
-const calcDisplaySummary = function (movement) {
+const calcDisplaySummary = function ({ movements, interestRate }) {
   //labelSumIn
   const income = movements
     .filter(move => move > 0)
@@ -115,15 +115,16 @@ const calcDisplaySummary = function (movement) {
     .filter(move => move <= 0)
     .reduce((acc, curr) => acc + curr, 0);
   labelSumOut.textContent = `${Math.abs(outCome)}€`;
+  console.log(interestRate);
   //labelSumInterest
   const interest = movements
     .filter(move => move >= 0)
-    .map(deposit => (deposit * 1.2) / 100)
+    .map(deposit => (deposit * interestRate) / 100)
     .filter(int => int >= 1)
     .reduce((acc, int) => acc + int, 0);
   labelSumInterest.textContent = `${interest}€`;
 };
-calcDisplaySummary(movements);
+// calcDisplaySummary(movements);
 
 // compute usernames
 const createUserNames = function (accs) {
@@ -137,3 +138,35 @@ const createUserNames = function (accs) {
   });
 };
 createUserNames(accounts);
+
+//get current account
+let currentAccount;
+// implementing login
+btnLogin.addEventListener('click', function (e) {
+  e.preventDefault();
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+  // check PIN
+  // using optional chaining
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    // display welcome message
+    labelWelcome.textContent = `Welcome Back, ${
+      currentAccount.owner.split(' ')[0]
+    }`;
+    containerApp.style.opacity = 100;
+
+    // clear input fields
+    inputLoginUsername.value = inputLoginPin.value = '';
+    inputLoginPin.blur();
+
+    // display movements
+    displayMovements(currentAccount.movements);
+    // display balance
+    calcPrintBalance(currentAccount.movements);
+    // display summary
+    calcDisplaySummary(currentAccount);
+  } else {
+    console.log('No');
+  }
+});

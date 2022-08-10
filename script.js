@@ -75,10 +75,12 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
+  // sort movements by ascending
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
   //empty the containerMovement
   containerMovements.innerHTML = '';
-  movements.forEach((move, i) => {
+  movs.forEach((move, i) => {
     //check if the movement is withdraw or deposit
     const type = move > 0 ? 'deposit' : 'withdrawal';
 
@@ -200,4 +202,50 @@ btnTransfer.addEventListener('click', function (e) {
   } else {
     console.log('cannot do it');
   }
+});
+
+// request loan
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Number(inputLoanAmount.value);
+  // grant loan if there is a deposit of 10% of the requested amount of loan
+  if (
+    amount > 0 &&
+    currentAccount.movements.some(dep => dep >= (amount * 10) / 100)
+  ) {
+    currentAccount.movements.push(amount);
+    updateUI(currentAccount);
+  }
+  inputLoanAmount.value = '';
+});
+// delete an account
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+  // check user's credentials
+  //if user input == accounts.username
+  const userCredName = inputCloseUsername.value;
+  const userCredPin = Number(inputClosePin.value);
+
+  if (
+    userCredName === currentAccount.username &&
+    userCredPin === currentAccount.pin
+  ) {
+    // deletion of the account
+    const indexOfCurrAcc = accounts.findIndex(
+      acc => acc.username === userCredName
+    );
+    accounts.splice(indexOfCurrAcc, 1);
+    labelWelcome.textContent = 'Log in to get started';
+    containerApp.style.opacity = 0;
+  }
+  inputCloseUsername.value = inputClosePin.value = '';
+});
+
+let stateSort = false;
+// sort movements
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !stateSort);
+  // reassign the variable
+  stateSort = !stateSort;
 });

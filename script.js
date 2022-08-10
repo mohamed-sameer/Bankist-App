@@ -97,8 +97,12 @@ const displayMovements = function (movements) {
 // displayMovements(account1.movements);
 
 //calc and print balance
-const calcPrintBalance = function (movements) {
-  const balance = movements.reduce((accu, currMov) => accu + currMov, 0);
+const calcPrintBalance = function (account) {
+  const balance = account.movements.reduce(
+    (accu, currMov) => accu + currMov,
+    0
+  );
+  account.balance = balance;
   labelBalance.textContent = `${balance} EUR`;
 };
 // calcPrintBalance(movements);
@@ -115,7 +119,6 @@ const calcDisplaySummary = function ({ movements, interestRate }) {
     .filter(move => move <= 0)
     .reduce((acc, curr) => acc + curr, 0);
   labelSumOut.textContent = `${Math.abs(outCome)}€`;
-  console.log(interestRate);
   //labelSumInterest
   const interest = movements
     .filter(move => move >= 0)
@@ -139,6 +142,15 @@ const createUserNames = function (accs) {
 };
 createUserNames(accounts);
 
+//update UI
+const updateUI = function (currAcc) {
+  // display movements
+  displayMovements(currAcc.movements);
+  // display balance
+  calcPrintBalance(currAcc);
+  // display summary
+  calcDisplaySummary(currAcc);
+};
 //get current account
 let currentAccount;
 // implementing login
@@ -160,11 +172,32 @@ btnLogin.addEventListener('click', function (e) {
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
 
-    // display movements
-    displayMovements(currentAccount.movements);
-    // display balance
-    calcPrintBalance(currentAccount.movements);
-    // display summary
-    calcDisplaySummary(currentAccount);
+    updateUI(currentAccount);
+  }
+});
+
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
+  // get amount & receiver username
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(
+    acc => acc.username === inputTransferTo.value
+  );
+
+  // check amount
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    currentAccount.balance >= amount &&
+    receiverAcc?.username !== currentAccount.username
+  ) {
+    // add the movement to the current account
+    currentAccount.movements.push(-amount);
+    receiverAcc.movements.push(amount);
+    //clear inputs
+    inputTransferAmount.value = inputTransferTo.value = '';
+    updateUI(currentAccount);
+  } else {
+    console.log('cannot do it');
   }
 });

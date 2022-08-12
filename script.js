@@ -219,8 +219,30 @@ const updateUI = function (currAcc) {
   // display summary
   calcDisplaySummary(currAcc);
 };
+
+//logout timer
+const logoutTimer = function () {
+  const tick = () => {
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    const sec = String(time % 60).padStart(2, 0);
+
+    labelTimer.textContent = `${min}:${sec}`;
+
+    if (time === 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = 'Log in to get started';
+      containerApp.style.opacity = 0;
+    }
+    time--;
+  };
+  let time = 120;
+  tick();
+  const timer = setInterval(tick, 1000);
+  return timer;
+};
+
 //get current account
-let currentAccount;
+let currentAccount, timer;
 
 // implementing login
 btnLogin.addEventListener('click', function (e) {
@@ -263,7 +285,8 @@ btnLogin.addEventListener('click', function (e) {
     // clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
-
+    if (timer) clearInterval(timer);
+    timer = logoutTimer();
     updateUI(currentAccount);
   }
 });
@@ -293,6 +316,8 @@ btnTransfer.addEventListener('click', function (e) {
     //clear inputs
     inputTransferAmount.value = inputTransferTo.value = '';
     updateUI(currentAccount);
+    clearInterval(timer);
+    timer = logoutTimer();
   } else {
     console.log('cannot do it');
   }
@@ -307,9 +332,13 @@ btnLoan.addEventListener('click', function (e) {
     amount > 0 &&
     currentAccount.movements.some(dep => dep >= (amount * 10) / 100)
   ) {
-    currentAccount.movements.push(amount);
-    currentAccount.movementsDates.push(new Date().toISOString());
-    updateUI(currentAccount);
+    setTimeout(function () {
+      currentAccount.movements.push(amount);
+      currentAccount.movementsDates.push(new Date().toISOString());
+      updateUI(currentAccount);
+      clearInterval(timer);
+      timer = logoutTimer();
+    }, 2000);
   }
   inputLoanAmount.value = '';
 });

@@ -31,3 +31,9 @@ to be able to run the project locally and view the code you'll need to have
 👉 clone this project using `git clone https://github.com/mohamed-sameer/Bankist-App.git` \
 👉 navigate to the app directory `cd Bankist-App`\
 👉 run the live server if you have it if you dint have it then open the `index.html` from your file explorer
+
+## Live Demo
+
+🔗 [Bankist App](https://bankist-app-mohamed.netlify.app/)\
+ 🧑‍🦱 userName: js
+🛡️ password: 1111

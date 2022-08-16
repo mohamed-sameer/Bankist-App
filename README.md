@@ -4,7 +4,7 @@ this project is made with vanilla JavaScript following up with jonas tutorial in
 
 ## what i learned
 
-- working with
+- working with\
   👉 arrays\
   👉 Numbers\
   👉 Dates\

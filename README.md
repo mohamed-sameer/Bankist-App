@@ -35,5 +35,5 @@ to be able to run the project locally and view the code you'll need to have
 ## Live Demo
 
 🔗 [Bankist App](https://bankist-app-mohamed.netlify.app/)\
- 🧑‍🦱 userName: js
+ 🧑‍🦱 userName: js\
 🛡️ password: 1111

@@ -6,13 +6,28 @@ this project is made with vanilla JavaScript following up with jonas tutorial in
 
 here is the [roadmap](https://docs.google.com/document/u/0/d/1Y6yScW88oaN5jHgcyo6PrCcGKL8STSD5nDrziFqpR4A/mobilebasic) i'm following
 
-## what i learned
+## What i learned
 
 - working with\
   👉 arrays\
   👉 Numbers\
   👉 Dates\
   👉 timers
+
+## Functions implemented
+
+⭐ User and PIN validation\
+⭐ Inactivity logout timer\
+⭐ Transaction display\
+⭐ Localization for currency and date\
+⭐ Summary of all in and out transactions and total balance\
+⭐ Total interest rate per user
+
+---
+
+🌟 Transferer money from and to accounts\
+🌟 Request loans based on 10% of a single deposit transaction\
+🌟 Delete account
 
 ## Technologies used
 
@@ -22,7 +37,7 @@ here is the [roadmap](https://docs.google.com/document/u/0/d/1Y6yScW88oaN5jHgcyo
 - VScode
 - git
 
-## minimum requirements
+## Minimum requirements
 
 to be able to run the project locally and view the code you'll need to have
 

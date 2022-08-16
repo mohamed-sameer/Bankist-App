@@ -5,10 +5,10 @@ this project is made with vanilla JavaScript following up with jonas tutorial in
 ## what i learned
 
 - working with
-  👉 arrays
-  👉 Numbers
-  👉 Dates
-  👉 timer
+  👉 arrays\
+  👉 Numbers\
+  👉 Dates\
+  👉 timers
 
 ## Technologies used
 
@@ -28,6 +28,6 @@ to be able to run the project locally and view the code you'll need to have
 
 ## Installation
 
-👉 clone this project using `git clone https://github.com/mohamed-sameer/Bankist-App.git`
-👉 navigate to the app directory `cd Bankist-App`
+👉 clone this project using `git clone https://github.com/mohamed-sameer/Bankist-App.git` \
+👉 navigate to the app directory `cd Bankist-App`\
 👉 run the live server if you have it if you dint have it then open the `index.html` from your file explorer
